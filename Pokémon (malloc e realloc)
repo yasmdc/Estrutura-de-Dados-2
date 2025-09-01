@@ -1,0 +1,89 @@
+//YASMIN MONTES DO CARMO
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Pokemon
+{
+    int numero;
+    char nome[50];
+    char tipo[20];
+};
+
+int imprimir(struct Pokemon *pokedex, int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        printf("#%d - ", pokedex[i].numero);
+        printf("%s ", pokedex[i].nome);
+        printf("(%s)\n", pokedex[i].tipo);
+    }
+}
+
+int busca(struct Pokemon *pokedex, int n, int num)
+{
+    for(int i=0; i<n; i++)
+    {
+        if(pokedex[i].numero==num)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+int main(void)
+{
+    int n=3;
+    struct Pokemon *pokedex = malloc(n  *sizeof(struct Pokemon));
+    pokedex[0].numero = 25;
+    strcpy(pokedex[0].nome, "Pikachu");
+    strcpy(pokedex[0].tipo, "Eletrico");
+    
+    pokedex[1].numero = 554;
+    strcpy(pokedex[1].nome, "Darumaka");
+    strcpy(pokedex[1].tipo, "Fogo");
+    
+    pokedex[2].numero = 812;
+    strcpy(pokedex[2].nome, "Rillaboom");
+    strcpy(pokedex[2].tipo, "Planta");
+    
+    imprimir(pokedex, n);
+    
+    int novoN = n+2;
+    struct Pokemon *tmp = realloc(pokedex, novoN *sizeof(struct Pokemon));
+    if(tmp==NULL)
+    {
+        printf("Erro realloc");
+    }
+    else
+    {
+        pokedex=tmp;
+    }
+    pokedex[3].numero = 87;
+    strcpy(pokedex[3].nome, "Dewgong");
+    strcpy(pokedex[3].tipo, "Agua");
+    
+    pokedex[4].numero = 486;
+    strcpy(pokedex[4].nome, "Regigigas");
+    strcpy(pokedex[4].tipo, "Normal");
+    
+    printf("---APOS REALOCAR---\n");
+    imprimir(pokedex, novoN);
+    
+    int num=554;
+    int result=busca(pokedex, n, num);
+    
+    printf("---RESULTADO DA BUSCA---\n");
+    if(result==-1)
+    {
+        printf("Numero %d nao encontrado\n", num);
+    }
+    else
+    {
+        printf("Numero %d encontrado\n", num);
+    }
+    
+    return 0;
+}
